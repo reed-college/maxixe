@@ -5,6 +5,9 @@ I wanted to use the old version of the api docs since our server is running
 an old version of tango
 You can find the new docs here:
 https://autolab.github.io/docs/tango-rest/
+also I got all of the status responses from here:
+https://github.com/autolab/Tango/blob/master/restful-tango/tangoREST.py#L27
+since they're not in the docs
 """
 from flask import Flask
 from json import dumps
@@ -27,5 +30,18 @@ def open(key, courselab):
         "statusMsg": "Created directory",
         "statusId": 0,
         "files": {},
+    }
+    return dumps(response)
+
+
+@app.route('/upload/<key>/<courselab>/')
+def upload(key, courselab):
+    """
+    This function would send a file to be stored on the Tango server
+    args are the same as above with the open function
+    """
+    response = {
+        "statusMsg": "Uploaded file",
+        "statusId": 0,
     }
     return dumps(response)
