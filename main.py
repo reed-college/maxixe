@@ -20,11 +20,12 @@ def hello_world():
 
 
 @app.route('/open/<key>/<courselab>/')
-def open(key, courselab):
+def topen(key, courselab):
     """
     This is the function that creates a new courselabs directory in Tango
     <key> is of course the Tango key and <courselab> is the name of the new
     directory
+    I called it topen to not conflict with the file I/O function 'open'
     """
     response = {
         "statusMsg": "Created directory",
@@ -71,3 +72,19 @@ def addJob(key, courselab):
         "jobId": jobCounter,  # here we use the counter
     }
     return dumps(response)
+
+
+@app.route('/poll/<key>/<courselab>/<outputFile>/')
+def poll(key, courselab, outputFile):
+    """
+    This returns the results of a given job. Normally you specify <outputFile>
+    in addJob and then when Tango runs the job, it stores the log of that job
+    in <outputFile>. Then, this function returns the contents of <outputFile>
+    to you.
+
+    What I did was I took one of these outputFiles and I put it in this
+    directory as "sample_outputFile.txt" and this function just read and
+    returns that file.
+    """
+    with open("sample_outputFile.txt", "r") as f:
+        return f.read()
