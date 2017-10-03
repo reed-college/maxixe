@@ -24,8 +24,8 @@ def open(key, courselab):
     directory
     """
     response = {
-        "statusMsg": "All Good",
-        "statusId": 1,
+        "statusMsg": "Created directory",
+        "statusId": 0,
         "files": {},
     }
     return dumps(response)
