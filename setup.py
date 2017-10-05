@@ -6,6 +6,6 @@ setup(
         "maxixe",
     ],
     scripts=[
-        "maxixe/__main__.py"
+        "mockTango"
     ],
 )
