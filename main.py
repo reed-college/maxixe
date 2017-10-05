@@ -88,3 +88,8 @@ def poll(key, courselab, outputFile):
     """
     with open("sample_outputFile.txt", "r") as f:
         return f.read()
+
+
+# If you call `python main.py`, then run the server
+if __name__ == "__main__":
+    app.run()
