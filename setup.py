@@ -6,6 +6,6 @@ setup(
         "maxixe",
     ],
     scripts=[
-        "python maxixe"
+        "python maxixe/__main__.py"
     ],
 )
