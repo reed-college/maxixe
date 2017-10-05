@@ -6,6 +6,6 @@ setup(
         "maxixe",
     ],
     scripts=[
-        "maxixe"
+        "python maxixe"
     ],
 )
