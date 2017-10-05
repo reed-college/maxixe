@@ -5,4 +5,7 @@ setup(
     packages=[
         "maxixe",
     ],
+    scripts=[
+        "maxixe"
+    ],
 )
