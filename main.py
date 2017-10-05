@@ -92,4 +92,4 @@ def poll(key, courselab, outputFile):
 
 # If you call `python main.py`, then run the server
 if __name__ == "__main__":
-    app.run()
+    app.run(port=3300)
