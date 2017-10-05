@@ -11,7 +11,7 @@ since they're not in the docs
 """
 from flask import Flask
 from json import dumps
-app = Flask(__name__)
+app = Flask("maxixe")
 
 
 @app.route('/')
@@ -88,8 +88,3 @@ def poll(key, courselab, outputFile):
     """
     with open("sample_outputFile.txt", "r") as f:
         return f.read()
-
-
-# If you call `python main.py`, then run the server
-if __name__ == "__main__":
-    app.run(port=3300)
