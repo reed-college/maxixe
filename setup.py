@@ -8,4 +8,7 @@ setup(
     scripts=[
         "mockTango"
     ],
+    install_requires=[
+        'Flask>=0.12.2'
+    ],
 )
