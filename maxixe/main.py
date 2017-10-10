@@ -88,3 +88,20 @@ def poll(key, courselab, outputFile):
     """
     with open("sample_outputFile.txt", "r") as f:
         return f.read()
+
+
+@app.route('/jobs/<key>/<deadjobs>/')
+def jobs(key, deadjobs):
+    """
+    If deadjobs == 0, then this would return a dictionary with a list of
+    currently running jobs. vrfy uses this to see if a specific job has
+    finished. If the job has finished, then it won't be in the list.
+    So, this function returns an empty list so that vrfy thinks it's job is
+    done
+    """
+    response = {
+        "statusMsg": "Found list of jobs",
+        "statusId": 0,
+        "jobs": [],
+    }
+    return dumps(response)
