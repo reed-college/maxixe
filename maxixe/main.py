@@ -10,7 +10,9 @@ https://github.com/autolab/Tango/blob/master/restful-tango/tangoREST.py#L27
 since they're not in the docs
 """
 from flask import Flask
-from json import dumps
+from flask import request
+from json import dumps, loads
+import requests
 app = Flask("maxixe")
 
 
@@ -48,6 +50,14 @@ def upload(key, courselab):
     return dumps(response)
 
 
+# The vrfy can send a callBack URL with the addJob command that Tango will
+# send the outputFile to when the job is done.
+# Here we create a global variable so that we can use that callback url after
+# The addJob function has finished
+global callBackURL
+callBackURL = ""
+
+
 @app.route('/addJob/<key>/<courselab>/', methods=['POST'])
 def addJob(key, courselab):
     """
@@ -59,6 +69,12 @@ def addJob(key, courselab):
     would be used to identify the job, but here it is just a unique integer
     that this app does not keep track of
     """
+    # set callBackURL variable if they sent a callback url
+    form = loads(request.data)
+    if form.get("callback_url"):
+        global callBackURL
+        callBackURL = form.get("callback_url")
+
     # This sets a global counter if it doesn't exist
     # increments it if it does exist
     if "jobCounter" not in globals():
@@ -72,6 +88,21 @@ def addJob(key, courselab):
         "jobId": jobCounter,  # here we use the counter
     }
     return dumps(response)
+
+
+@app.after_request
+def callBack(response):
+    """
+    similar to the 'poll' function below, this reads the sample output file
+    and sends it to the callback url that we set above
+    """
+    global callBackURL
+    if callBackURL:
+        with open("sample_outputFile.txt", "r") as f:
+            files = {"file": f}
+            requests.post(callBackURL, files)
+        callBackURL = ""
+    return response
 
 
 @app.route('/poll/<key>/<courselab>/<outputFile>/')
