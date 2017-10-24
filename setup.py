@@ -9,7 +9,7 @@ setup(
         "mockTango"
     ],
     install_requires=[
-        'Flask >= 0.12.2'
-        'requests >= 2.18.4'
+        'Flask>=0.12.2',
+        'requests>=2.18.4',
     ],
 )
