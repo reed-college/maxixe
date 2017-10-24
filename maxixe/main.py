@@ -13,6 +13,7 @@ from flask import Flask
 from flask import request
 from json import dumps, loads
 import requests
+import re
 app = Flask("maxixe")
 
 
@@ -90,6 +91,19 @@ def addJob(key, courselab):
     return dumps(response)
 
 
+def _get_sample_outputfile():
+    """
+    Helper function that returns a sample outputfile for the callback and
+    poll functions
+    """
+    with open("sample_outputFile.txt", "r") as f:
+        sample = f.read()
+    # trim extra newlines from the beginning and end of the file
+    sample = re.sub(r'^\n+|\n+$', "", sample)
+
+    return sample
+
+
 @app.after_request
 def callBack(response):
     """
@@ -98,9 +112,8 @@ def callBack(response):
     """
     global callBackURL
     if callBackURL:
-        with open("sample_outputFile.txt", "r") as f:
-            files = {"file": f}
-            requests.post(callBackURL, files)
+        files = {"file": _get_sample_outputfile()}
+        requests.post(callBackURL, files=files)
         callBackURL = ""
     return response
 
@@ -114,11 +127,10 @@ def poll(key, courselab, outputFile):
     to you.
 
     What I did was I took one of these outputFiles and I put it in this
-    directory as "sample_outputFile.txt" and this function just read and
+    directory as "sample_outputFile.txt" and this function just reads and
     returns that file.
     """
-    with open("sample_outputFile.txt", "r") as f:
-        return f.read()
+    return _get_sample_outputfile()
 
 
 @app.route('/jobs/<key>/<deadjobs>/')
