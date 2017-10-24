@@ -14,6 +14,7 @@ from flask import request
 from json import dumps, loads
 import requests
 import re
+import os
 app = Flask("maxixe")
 
 
@@ -96,7 +97,9 @@ def _get_sample_outputfile():
     Helper function that returns a sample outputfile for the callback and
     poll functions
     """
-    with open("sample_outputFile.txt", "r") as f:
+    # get the file realative to this file
+    filename = os.path.join(os.path.dirname(__file__), "sample_outputFile.txt")
+    with open(filename, "r") as f:
         sample = f.read()
     # trim extra newlines from the beginning and end of the file
     sample = re.sub(r'^\n+|\n+$', "", sample)
