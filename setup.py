@@ -1,7 +1,7 @@
 from setuptools import setup
 setup(
     name="maxixe",
-    version="0.2",
+    version="1.0",
     packages=[
         "maxixe",
     ],
