@@ -12,4 +12,5 @@ setup(
         'Flask>=0.12.2',
         'requests>=2.18.4',
     ],
+    include_package_data=True,
 )
