@@ -18,11 +18,6 @@ import os
 app = Flask("maxixe")
 
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
-
-
 @app.route('/open/<key>/<courselab>/')
 def topen(key, courselab):
     """
@@ -72,10 +67,12 @@ def addJob(key, courselab):
     that this app does not keep track of
     """
     # set callBackURL variable if they sent a callback url
-    form = loads(request.data)
+    form = loads(request.data.decode('utf8'))
     if form.get("callback_url"):
         global callBackURL
         callBackURL = form.get("callback_url")
+
+    #print(form)
 
     # This sets a global counter if it doesn't exist
     # increments it if it does exist
@@ -103,6 +100,7 @@ def _get_sample_outputfile():
         sample = f.read()
     # trim extra newlines from the beginning and end of the file
     sample = re.sub(r'^\n+|\n+$', "", sample)
+    #print(sample)
 
     return sample
 
